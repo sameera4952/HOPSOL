@@ -2,7 +2,7 @@
 'use strict';
 
 
-const API = 'http://localhost:5000/api';
+const API = 'https://hopsol-backend.onrender.com/api';
 
 // ---------------------------------------------------------
 // LOCAL STORAGE HELPERS
