@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>schedule your appointment</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #eef5ef;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: medium;
+            font-style: normal;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #dfeee3;
+            border-right: 1px solid #c9ddce;
+            padding: 32px 20px;
+            width: 230px;
+        }
+
+        .sidebar h2 {
+            color: #254b38;
+            font-size: 1.2rem;
+            margin: 0 0 8px;
+        }
+
+        .sidebar p {
+            color: #587061;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0 0 28px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar a {
+            border-radius: 5px;
+            color: #254b38;
+            display: block;
+            padding: 11px 12px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover,
+        .sidebar a:focus {
+            background-color: #cfe4d4;
+            outline: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 48px clamp(20px, 6vw, 76px);
+        }
+
+        .booking-card {
+            background: #ffffff;
+            border: 1px solid #d5e5d8;
+            border-radius: 12px;
+            margin: 0 auto;
+            max-width: 760px;
+            padding: 28px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .booking-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .appointment-sections {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 24px auto 0;
+            max-width: 760px;
+        }
+
+        .appointment-section {
+            background: #ffffff;
+            border: 1px solid #d5e5d8;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .appointment-section h2 {
+            color: #254b38;
+            font-size: 1rem;
+            margin: 0 0 12px;
+        }
+
+        .appointment-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .appointment-item {
+            background: #f4faf5;
+            border-left: 3px solid #6b9d7a;
+            padding: 10px;
+        }
+
+        .appointment-item strong,
+        .appointment-item span {
+            display: block;
+        }
+
+        .appointment-item span,
+        .empty-state {
+            color: #587061;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .choice-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .choice-group label {
+            background: #f4faf5;
+            border: 1px solid #c9ddce;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            font-weight: normal;
+            padding: 12px;
+        }
+
+        .choice-group input {
+            margin-right: 8px;
+        }
+
+        .secondary-button {
+            background: #ffffff;
+            color: #34745f;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        button {
+            border: 1px solid #b9a98d;
+            border-radius: 5px;
+            font: inherit;
+            padding: 10px;
+        }
+
+        button {
+            background: #34745f;
+            border-color: #34745f;
+            color: white;
+            cursor: pointer;
+        }
+
+        #booking-status {
+            min-height: 1.2em;
+        }
+
+        #booking-status.success {
+            color: #236044;
+        }
+
+        #booking-status.error {
+            color: #9b2c2c;
+        }
+
+        @media (max-width: 700px) {
+            .dashboard {
+                display: block;
+            }
+
+            .sidebar {
+                border-bottom: 1px solid #c9ddce;
+                border-right: 0;
+                width: 100%;
+            }
+
+            .sidebar p {
+                margin-bottom: 14px;
+            }
+
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .sidebar li {
+                margin-bottom: 0;
+            }
+
+            .content {
+                padding: 24px 16px;
+            }
+
+            .appointment-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body id="booking-page">
+    <div class="dashboard">
+        <aside class="sidebar" aria-label="Patient navigation">
+            <h2>Patient Dashboard</h2>
+            <p>Manage your appointment bookings.</p>
+            <ul>
+                <li><a href="front.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="patient.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="content" id="profile">
+            <section class="booking-card" id="booking-area">
+                <h1>Book an appointment</h1>
+                <form class="booking-form" id="booking-form">
+                    <label for="patient-name">Patient name
+                        <input id="patient-name" name="patient" required>
+                    </label>
+                    <label for="specialist">Specialist
+                        <select id="specialist" name="specialist" required>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Radiology">Radiology</option>
+                    <option value="Anesthesiology">Anesthesiology</option>
+                    <option value="Emergency Medicine">Emergency Medicine</option>
+                    <option value="Family Medicine">Family Medicine</option>
+                    <option value="Internal Medicine">Internal Medicine</option>
+                        </select>
+                    </label>
+                    <label for="appointment-date">Date
+                        <input id="appointment-date" name="date" type="date" required>
+                    </label>
+                    <label for="appointment-time">Time
+                        <input id="appointment-time" name="time" type="time" required>
+                    </label>
+                    <button type="button" id="book-appointment-button">Book appointment</button>
+                    <p id="booking-status" role="status" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <section class="booking-card" id="confirmation-area" hidden>
+                <h2>Appointment details</h2>
+                <form class="booking-form" id="confirmation-form">
+                    <fieldset class="choice-group">
+                        <legend>Choose appointment type</legend>
+                        <label><input type="radio" name="visitType" value="Physical" required> Physical approach</label>
+                        <label><input type="radio" name="visitType" value="Telehealth" required> Telehealth</label>
+                    </fieldset>
+                    <label for="contact-number">Contact number
+                        <input id="contact-number" name="contactNumber" type="tel" required>
+                    </label>
+                    <label for="appointment-notes">Additional details
+                        <textarea id="appointment-notes" name="notes" rows="4" placeholder="Reason for visit or other information"></textarea>
+                    </label>
+                    <button type="submit">Confirm appointment</button>
+                    <button type="button" class="secondary-button" id="edit-booking-button">Edit appointment</button>
+                </form>
+            </section>
+
+            <div class="appointment-sections">
+                <section class="appointment-section">
+                    <h2>Booked appointments</h2>
+                    <div class="appointment-list" id="booked-appointments"></div>
+                </section>
+                <section class="appointment-section">
+                    <h2>Upcoming appointments</h2>
+                    <div class="appointment-list" id="upcoming-appointments"></div>
+                </section>
+                <section class="appointment-section">
+                    <h2>Past appointments</h2>
+                    <div class="appointment-list" id="past-appointments"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

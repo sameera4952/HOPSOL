@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor appointments</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  :root {
+    --sidebar: #edf3ef;
+    --sidebar-border: #d6e3dc;
+    --main: #f7f4ed;
+    --card: #ffffff;
+    --ink: #24352d;
+    --muted: #6a776f;
+    --accent: #34745f;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--main);
+    color: var(--ink);
+    font-family: 'Trebuchet MS', sans-serif;
+    margin: 0;
+  }
+  .container {
+    display: flex;
+    min-height: 100vh;
+  }
+  .sidebar {
+    background-color: var(--sidebar);
+    border-right: 1px solid var(--sidebar-border);
+    padding: 32px 20px;
+    width: 230px;
+    flex-shrink: 0;
+  }
+  .sidebar h2 {
+    font-size: 1.15rem;
+    margin: 0 0 8px;
+  }
+  .sidebar p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0 0 32px;
+  }
+  .sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar li {
+    margin-bottom: 8px;
+  }
+  .sidebar a {
+    border-radius: 6px;
+    color: var(--ink);
+    display: block;
+    padding: 11px 12px;
+    text-decoration: none;
+  }
+  .sidebar a:hover,
+  .sidebar a:focus {
+    background-color: #dcebe3;
+    outline: none;
+  }
+  .main-content {
+    flex: 1;
+    padding: 48px clamp(24px, 6vw, 76px);
+    background-color: var(--main);
+  }
+  .page-header {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  .main-content h1 {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin: 0 0 8px;
+  }
+  .main-content p {
+    color: var(--muted);
+    margin: 0;
+  }
+  .specialist-control {
+    color: var(--muted);
+    display: grid;
+    font-size: 0.85rem;
+    gap: 6px;
+    min-width: 210px;
+  }
+  select {
+    background: var(--card);
+    border: 1px solid var(--sidebar-border);
+    border-radius: 5px;
+    color: var(--ink);
+    padding: 10px;
+  }
+  .appointment-panel {
+    background-color: var(--card);
+    border: 1px solid #e6e4dd;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(49, 65, 57, 0.06);
+    padding: 24px;
+  }
+  .appointment-panel h2 {
+    font-size: 1.2rem;
+    margin: 0 0 18px;
+  }
+  .appointment-list {
+    display: grid;
+    gap: 12px;
+  }
+  .appointment {
+    align-items: center;
+    border: 1px solid #e9ece8;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    display: grid;
+    gap: 8px 20px;
+    grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) minmax(130px, 0.8fr) minmax(110px, 0.7fr);
+    padding: 16px;
+  }
+  .appointment strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .appointment span {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .empty-state {
+    background: #fafbf9;
+    border: 1px dashed #ccd9d0;
+    border-radius: 6px;
+    color: var(--muted);
+    padding: 28px;
+    text-align: center;
+  }
+  @media (max-width: 700px) {
+    .container { 
+      display: block;
+     }
+    .sidebar {
+       border-bottom: 1px solid var(--sidebar-border); 
+       border-right: 0; width: 100%;
+       }
+    .sidebar p {
+       margin-bottom: 14px;
+       }
+    .sidebar ul { 
+      display: flex;
+       flex-wrap: wrap;
+        gap: 4px; 
+      }
+    .sidebar li {
+       margin: 0;
+       }
+    .page-header {
+       display: block;
+       }
+    .specialist-control {
+       margin-top: 22px;
+       }
+    .appointment {
+       display: block;
+       }
+    .appointment > div {
+       margin-bottom: 10px;
+       }
+    .appointment > div:last-child {
+       margin-bottom: 0;
+       }
+  }
+</style>
+</head>
+<body id="doctor-dashboard">
+  <div class="container">
+    <aside class="sidebar" aria-label="Doctor navigation">
+      <h2>Doctor Dashboard</h2>
+      <p>Keep track of the patients booked with you.</p>
+      <ul>
+        <li><a href="front.html">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="doctor.html">Logout</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header" id="profile">
+        <div>
+          <h1>Booked appointments</h1>
+          <p>Appointments booked by patients in your specialist area.</p>
+        </div>
+        <label class="specialist-control" for="specialist-filter">
+          Viewing specialist
+          <select id="specialist-filter" aria-label="Filter appointments by specialist"></select>
+        </label>
+      </header>
+
+      <section class="appointment-panel" aria-labelledby="appointment-heading">
+        <h2 id="appointment-heading">Upcoming patient visits</h2>
+        <div class="appointment-list" id="appointment-list"></div>
+      </section>
+
+      <section class="appointment-panel" aria-labelledby="past-appointment-heading">
+        <h2 id="past-appointment-heading">Past patient visits</h2>
+        <div class="appointment-list" id="past-appointment-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
